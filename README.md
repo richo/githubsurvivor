@@ -38,7 +38,7 @@ Requirements:
 
 This command might satisfy the above dependencies on Ubuntu:
 
-    $ sudo apt-get install python-2.7 python-virtualenv mongodb lessc make
+    $ sudo apt-get install python2.7 python-virtualenv mongodb lessc make
 
 ### Installation
 
