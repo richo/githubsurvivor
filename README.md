@@ -57,6 +57,10 @@ You'll probably want to run this periodically, e.g. in an hourly cron job.
 
     $ bin/serve
 
+### Development notes
+
+Stylesheets are LESS files. Run `make css` to regenerate CSS from LESS sources.
+
 ## License
 
 MIT; see `LICENSE`
