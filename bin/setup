@@ -30,6 +30,8 @@ for srcdir in $ROOT/src/*; do
     fi
 done
 
+(cd $ROOT && make)
+
 # Prepare example configuration
 exampleconf="$ROOT/config.example.py"
 conf="$ROOT/config.py"
