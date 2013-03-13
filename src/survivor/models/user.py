@@ -7,48 +7,27 @@ class UserQuerySet(QuerySet):
     """
     Custom user queries.
     """
-    def competitors(self):
-        return filter(lambda u: u.leaderboard_user(), self.all())
-
     def developers(self):
-        return self.competitors()
+        "Return all those users that should be included in the leaderboard."
+        whitelist = config['leaderboard_users']
+        return [u for u in self.all() if not whitelist or u.login in whitelist]
 
 class User(Document):
     """
-    A GitHub collaborator.
+    Some developer that fixes bugs.
     """
     meta = {'queryset_class': UserQuerySet}
 
-    github_id = IntField(required=True, unique=True)
-    login = StringField()
-    name = StringField()
-    email = StringField()
+    login = StringField(required=True)
     avatar_url = StringField()
-    gravatar_id = StringField()
-
-    def __init__(self, **kwargs):
-        self._closed_issues = None
-        Document.__init__(self, **kwargs)
+    assigned_issues_url = StringField()
 
     def assigned_issues(self):
-        return self.issues('open')
+        return self.issues().filter(state='open')
 
     def closed_issues(self):
-        return self.issues('closed')
+        return self.issues().filter(state='closed')
 
-    def reported_issues(self):
-        from survivor.models.issue import Issue
-        return Issue.objects(reporter=self)
-
-    def issues(self, state):
-        from survivor.models.issue import Issue
-        return Issue.objects(assignee=self, state=state)
-
-    def leaderboard_user(self):
-        "Returns true if user should be included in leaderboards."
-        whitelist = config['leaderboard_users']
-        return not whitelist or self.login in whitelist
-
-    def assigned_issues_url(self):
-        return 'https://github.com/%s/issues/assigned/%s' % (config['github.repo'],
-                                                             self.login)
+    def issues(self):
+        from survivor.models import Issue
+        return Issue.objects(assignee=self)

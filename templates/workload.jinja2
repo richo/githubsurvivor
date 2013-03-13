@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/styles/report.css" />
 {% endblock %}
 
-{% block body %}	
+{% block body %}
 <div class="report">
 	<h1>Developer workload</h1>
 	<table>
@@ -17,7 +17,7 @@
 		<tbody>
 			{% for developer, assigned in workload | sort(attribute=1, reverse=True) %}
 			<tr>
-				<td class="developer"><a href="{{ developer.assigned_issues_url() }}">{{ developer.login }}</a></td>
+				<td class="developer"><a href="{{ developer.assigned_issues_url }}">{{ developer.login }}</a></td>
 				<td class="assigned">{{ assigned }}</td>
 			</tr>
 			{% endfor %}
