@@ -74,3 +74,6 @@ class Importer(object):
         return self.jira.search_issues(
             'project=%s and (status=OPEN or status=CLOSED)' % self.project,
             maxResults=MAX_ISSUE_RESULTS)
+
+def issue_importer(config):
+    return Importer(config)

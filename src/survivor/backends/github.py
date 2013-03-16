@@ -64,3 +64,6 @@ class Importer(object):
     def _fetch_issues(self):
         return itertools.chain(self.repo.get_issues(state='open'),
                                self.repo.get_issues(state='closed'))
+
+def issue_importer(config):
+    return Importer(config)

@@ -4,17 +4,12 @@ Synchronises local database with the remote issue tracker.
 
 import argparse
 
-from survivor import config
-from survivor.backends import backend_for
+from survivor.backends import issue_importer
 from survivor.models import User, Issue
-
-def importer_for(config):
-    backend = backend_for(config)
-    return backend.Importer(config)
 
 def sync(types, verbose=False):
 
-    importer = importer_for(config)
+    importer = issue_importer()
 
     if 'users' in types:
         if verbose: print 'Synchronising users...'

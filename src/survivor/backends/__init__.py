@@ -17,6 +17,5 @@ def backend_for(config):
     module_name = 'survivor.backends.%s' % config.get('backend', 'github')
     return __import__(module_name, fromlist=module_name)
 
-def configured_backend():
-    "Import and return the backend specified by the global config."
-    return backend_for(config)
+def issue_importer():
+    return backend_for(config).issue_importer(config)
