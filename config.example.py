@@ -9,6 +9,17 @@ config = {
     # See https://help.github.com/articles/creating-an-oauth-token-for-command-line-use
     'github.oauth_token': 'my-secret',
 
+    # Uncomment to specify some alternate backend
+    # Currently supported: github, jira
+    # 'backend': 'github',
+
+    # JIRA settings
+    # Uncomment & edit these when backend == jira
+    # 'jira.server': 'https://jira.example.com',
+    # 'jira.username': 'jira-username',
+    # 'jira.password': 'jira-password',
+    # 'jira.project': 'JIRAPROJECT',
+
     # Your local Mongo database
     'db': 'githubsurvivor',
 
