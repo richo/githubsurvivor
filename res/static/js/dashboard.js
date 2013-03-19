@@ -110,8 +110,19 @@ survivor.dashboard = (function () {
                          y: CHART_HEIGHT - (val / maxValue) * CHART_HEIGHT };
             });
 
-            // close the path, allowing for stroke width
-            // XXX: this is cheating
+            // Close the path, allowing for stroke width
+            // This extends the chart outside of the visible area so we don't
+            // see any weird edges, i.e.:
+            //
+            //  +---------------------+
+            //  |..---................|
+            // ++-/   -\.............-++
+            // ||       -\.....-----/ ||
+            // ||         ----/       ||
+            // ||                     ||
+            // |+---------------------+|
+            // +-----------------------+
+
             points[0].x -= strokeWidth;
             points[points.length - 1].x += strokeWidth;
             points.push({ x: CHART_WIDTH + strokeWidth, y: CHART_HEIGHT + strokeWidth });
