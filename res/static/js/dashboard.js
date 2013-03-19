@@ -1,4 +1,4 @@
-/*global window, document, $, Raphael */
+/*global window, document, $, SVG */
 
 var survivor = survivor || {};
 
@@ -35,10 +35,9 @@ survivor.dashboard = (function () {
         $container.append('<label>' + title + '</label>');
         $container.append($chart);
 
-        var chart = new Raphael($chart.get(0), '100%', '100%');
-        chart.setViewBox(0, 0, CHART_WIDTH, CHART_HEIGHT);
-        // This isn't supported natively in Raphael
-        chart.canvas.setAttribute('preserveAspectRatio', 'none');
+        var chart = SVG($chart.get(0), '100%', '100%');
+        chart.viewbox(0, 0, CHART_WIDTH, CHART_HEIGHT);
+        chart.attr('preserveAspectRatio', 'none');
 
         drawFn(chart);
 
@@ -73,12 +72,11 @@ survivor.dashboard = (function () {
                     var colHeight = val / maxValue * CHART_HEIGHT;
                     var hOffset = colWidth * (3 * rowIdx + colIdx);
                     var vOffset = CHART_HEIGHT - colHeight;
-                    var col = chart.rect(hOffset,
-                                         vOffset,
-                                         colWidth,
-                                         colHeight);
-                    col.attr('fill', args.colours[colIdx]);
-                    col.attr('stroke-width', 0);
+                    var col = chart.rect(colWidth, colHeight);
+                    col.attr({'x': hOffset,
+                              'y': vOffset,
+                              'fill': args.colours[colIdx],
+                              'stroke-width': 0});
                 });
             });
         });
@@ -128,14 +126,10 @@ survivor.dashboard = (function () {
             points.push({ x: CHART_WIDTH + strokeWidth, y: CHART_HEIGHT + strokeWidth });
             points.push({ x: -strokeWidth, y: CHART_HEIGHT + strokeWidth });
 
-            // Is this really how paths are created in SVG? :(
-            var pathStr =
-                'M ' +
-                points.map(function (p) { return p.x + ' ' + p.y; }).join(' L ') +
-                ' z';
+            var pathStr = points.map(function (p) { return p.x + ',' + p.y; }).join(' ');
 
-            var line = chart.path(pathStr);
-            line.attr({
+            var area = chart.polygon(pathStr);
+            area.attr({
                 'stroke': args.colours.line,
                 'stroke-width': strokeWidth,
                 'fill': args.colours.area
