@@ -13,12 +13,21 @@ survivor.dashboard = (function () {
         return new Date(Date.parse(s));
     }
 
+    // Transform an HTML <table> into a two-dimensional array of strings
+    function slurp(table) {
+        return $.makeArray($(table).find('tbody tr')).map(function (tr) {
+            return $.makeArray($(tr).find('td')).map(function (td) {
+                return $(td).text();
+            });
+        });
+    }
+
     // Extract data from each row in the <tbody> of `dataTable`. Each function
     // in `mappers` transforms values in a single column
     function extractData(dataTable, mappers) {
-        return $.makeArray($(dataTable).find('tbody tr')).map(function (tr) {
+        return slurp(dataTable).map(function (row) {
             return mappers.map(function (mapper, idx) {
-                return mapper($(tr).find('td:nth-child(' + (idx + 1) + ')').text());
+                return mapper(row[idx]);
             });
         });
     }
