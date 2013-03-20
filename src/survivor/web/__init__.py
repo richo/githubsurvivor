@@ -6,8 +6,7 @@ from random import shuffle
 from flask import Flask, render_template, request
 from jinja2 import FileSystemLoader
 
-import survivor
-from survivor import reporting, timeutils, config
+from survivor import reporting, timeutils, app_root, config
 from survivor.models import User, Issue
 from survivor.web import template
 
@@ -46,7 +45,7 @@ def dashboard():
                          for i in reversed(xrange(previous_periods))]
     current_period = reporting_periods[-1]
 
-    developers = User.objects.competitors()
+    developers = User.objects.developers()
     # Randomise order of developers with equal bug counts
     # FIXME: show developers as tied in template
     shuffle(developers)
@@ -118,11 +117,10 @@ def unassigned():
 ### Initialisation
 
 if __name__ == "__main__":
-    survivor.init()
     template.register_helpers(app)
-    app_root = survivor.app_root()
-    app.jinja_loader = FileSystemLoader(os.path.join(app_root, 'templates'))
-    app.static_folder = '%s/res/static' % app_root
+    root = app_root()
+    app.jinja_loader = FileSystemLoader(os.path.join(root, 'templates'))
+    app.static_folder = '%s/res/static' % root
 
     try: app.debug = config['flask.debug']
     except KeyError: pass

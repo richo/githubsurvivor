@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from mongoengine import *
 from mongoengine.queryset import QuerySet
 
@@ -31,16 +29,14 @@ class IssueQuerySet(QuerySet):
 
 class Issue(Document):
     """
-    A GitHub Issue
+    Some bug that may or may not have been fixed.
     """
     meta = {'queryset_class': IssueQuerySet}
 
-    number = IntField(unique=True, required=True)
-    title = StringField()
-    state = StringField()
+    key = StringField(required=True)
+    title = StringField(required=True)
+    state = StringField(required=True) # {open, closed}
     assignee = ReferenceField(User, dbref=False)
-    reporter = ReferenceField(User, dbref=False)
-    closed = DateTimeField()
     opened = DateTimeField(required=True)
-    updated = DateTimeField(required=True)
-    url = URLField()
+    closed = DateTimeField()
+    url = StringField()

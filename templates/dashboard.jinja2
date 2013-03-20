@@ -33,7 +33,7 @@
 			<ol>
 				{% for member, count in members %}
 				<li>
-					<img class="avatar" src="//www.gravatar.com/avatar/{{ member.gravatar_id }}?s=52" />
+					<img class="avatar" src="{{ member.avatar_url }}" />
 					<span class="name">{{ member.login }}</span>
 					<span class="count">{{ count }}</span>
 				</li>
