@@ -5,9 +5,6 @@ var survivor = survivor || {};
 survivor.dashboard = (function () {
     'use strict';
 
-    // ----------------------------------------
-    // Charts
-
     // Parse an ISO-8601-formatted date string
     function parseDate(s) {
         return new Date(Date.parse(s));
@@ -32,131 +29,155 @@ survivor.dashboard = (function () {
         });
     }
 
+    // ----------------------------------------
+    // Charts
+
     // logical chart units
     var CHART_WIDTH = 1000,
         CHART_HEIGHT = 1000;
 
-    // Create various chart elements, using `drawFn` to render the chart body
-    function createChart(title, drawFn) {
+    function Chart() {}
+
+    Chart.prototype.init = function (title) {
         var $container = $('<div class="chart-container">');
         var $chart = $('<div class="chart">');
 
         $container.append('<label>' + title + '</label>');
         $container.append($chart);
 
-        var chart = SVG($chart.get(0), '100%', '100%');
-        chart.viewbox(0, 0, CHART_WIDTH, CHART_HEIGHT);
-        chart.attr('preserveAspectRatio', 'none');
+        var svg = SVG($chart.get(0), '100%', '100%');
+        svg.viewbox(0, 0, CHART_WIDTH, CHART_HEIGHT);
+        svg.attr('preserveAspectRatio', 'none');
 
-        drawFn(chart);
+        this.element = $container.get(0);
+        this.svg = svg;
+    };
 
-        return $container;
+    // A chart that draws an array of column groups, where each column group is
+    // an array of numbers in the range [0, 1].
+    function ColumnChart(title) {
+        return this.init(title);
     }
 
-    // Initialise bug rate chart
-    // args: {
-    //   dataTable: <datatable element>,
-    //   colours: <array of column colours>,
-    //   dateFormat: <h-axis date format>
-    // }
+    ColumnChart.prototype = new Chart();
+
+    ColumnChart.prototype.draw = function (data) {
+        var colsPerGroup = data[0].length + 1; // include a spacer column
+        var totalCols = data.length * colsPerGroup - 1;
+        var colWidth = CHART_WIDTH / totalCols;
+
+        data.forEach(function (row, rowIdx) {
+            row.forEach(function (val, colIdx) {
+                var colHeight = val * CHART_HEIGHT;
+                var hOffset = colWidth * (colsPerGroup * rowIdx + colIdx);
+                var vOffset = CHART_HEIGHT - colHeight;
+                var col = this.svg.rect(colWidth, colHeight);
+                col.attr({ 'x': hOffset,
+                           'y': vOffset,
+                           'class': 'column-' + colIdx,
+                           'stroke-width': 0 });
+            }, this);
+        }, this);
+    };
+
+    // A chart that draws a line chart from an array of values, where each value
+    // is a number in the range [0, 1].
+    function LineChart(title) {
+        return this.init(title);
+    }
+
+    LineChart.prototype = new Chart();
+
+    LineChart.prototype.strokeWidth = 10;
+
+    LineChart.prototype.toPoints = function (values) {
+        var hOffset = CHART_WIDTH / (values.length - 1);
+        var points = values.map(function (val, idx) {
+            return { x: hOffset * idx, y: CHART_HEIGHT - val * CHART_HEIGHT };
+        });
+
+        // Close the path, allowing for stroke width
+        // This extends the chart outside of the visible area so we don't
+        // see any weird edges, i.e.:
+        //
+        //  +---------------------+
+        //  |..---................|
+        // ++-/   -\.............-++
+        // ||       -\.....-----/ ||
+        // ||         ----/       ||
+        // ||                     ||
+        // |+---------------------+|
+        // +-----------------------+
+
+        points[0].x -= this.strokeWidth;
+        points[points.length - 1].x += this.strokeWidth;
+        points.push({ x: CHART_WIDTH + this.strokeWidth, y: CHART_HEIGHT + this.strokeWidth });
+        points.push({ x: -this.strokeWidth, y: CHART_HEIGHT + this.strokeWidth });
+
+        return points;
+    };
+
+    LineChart.prototype.draw = function (values) {
+        var points = this.toPoints(values);
+        var pathStr = points.map(function (p) { return p.x + ',' + p.y; }).join(' ');
+        var area = this.svg.polygon(pathStr);
+        area.attr({ 'class': 'line-chart',
+                    'stroke-width': this.strokeWidth });
+    };
+
+    // ----------------------------------------
+    // Initialisation
+
     function initBugRateChart(args) {
-        var $dataTable = $(args.dataTable);
+        var $dataTable = $('#bug-rate-data');
 
         var data = extractData($dataTable, [parseDate, parseInt, parseInt]);
-        var maxValue = Math.max.apply(null, data.map(function (row) {
-            return Math.max(row[1], row[2]);
-        }));
-        // total cols = 2 cols per group + 1-col gap between each group
-        var colWidth = CHART_WIDTH / (data.length * 3 - 1);
+        var rawValues = data.map(function (group) {
+            // drop date; we don't display it
+            return group.slice(1);
+        });
 
-        var container = createChart($dataTable.attr('summary'), function (chart) {
-            // var cols = data.map(function (row, rowIdx) {
-            //     return {};
-            // });
-            // cols.forEach(function (col) {
-            //     chart.rect();
-            // });
-            data.forEach(function (row, rowIdx) {
-                row.slice(1).forEach(function (val, colIdx) {
-                    var colHeight = val / maxValue * CHART_HEIGHT;
-                    var hOffset = colWidth * (3 * rowIdx + colIdx);
-                    var vOffset = CHART_HEIGHT - colHeight;
-                    var col = chart.rect(colWidth, colHeight);
-                    col.attr({'x': hOffset,
-                              'y': vOffset,
-                              'class': colIdx ? 'bugs-opened-column' : 'bugs-closed-column',
-                              'stroke-width': 0});
-                });
+        // Normalise values into the range [0, 1]
+        var max = Math.max.apply(null, rawValues.map(function (group) {
+            return Math.max.apply(null, group);
+        }));
+        var relativeValues = rawValues.map(function (group) {
+            return group.map(function (val) {
+                return val / max;
             });
         });
 
-        $dataTable.replaceWith(container);
+        var chart = new ColumnChart($dataTable.attr('summary'));
+        $dataTable.replaceWith(chart.element);
+        chart.draw(relativeValues);
     }
 
-    // Initialise open bug count chart
-    // args: {
-    //   containerId: <datatable element>,
-    //   colours: { line: <line colour>, area: <area colour> },
-    //   dateFormat: <h-axis date format>
-    // }
-    function initBugCountChart(args) {
-        var $dataTable = $(args.dataTable);
+    function initBugCountChart() {
+        var $dataTable = $('#open-bug-data');
 
         var data = extractData($dataTable, [parseDate, parseInt]);
-        var maxValue = Math.max.apply(null, data.map(function (row) {
+        var rawValues = data.map(function (row) {
+            // drop date; we don't display it
             return row[1];
-        }));
-        var hOffset = CHART_WIDTH / (data.length - 1);
-
-        var strokeWidth = 10;
-
-        var container = createChart($dataTable.attr('summary'), function (chart) {
-            var points = data.map(function (row, idx) {
-                var val = row[1];
-                return { x: hOffset * idx,
-                         y: CHART_HEIGHT - (val / maxValue) * CHART_HEIGHT };
-            });
-
-            // Close the path, allowing for stroke width
-            // This extends the chart outside of the visible area so we don't
-            // see any weird edges, i.e.:
-            //
-            //  +---------------------+
-            //  |..---................|
-            // ++-/   -\.............-++
-            // ||       -\.....-----/ ||
-            // ||         ----/       ||
-            // ||                     ||
-            // |+---------------------+|
-            // +-----------------------+
-
-            points[0].x -= strokeWidth;
-            points[points.length - 1].x += strokeWidth;
-            points.push({ x: CHART_WIDTH + strokeWidth, y: CHART_HEIGHT + strokeWidth });
-            points.push({ x: -strokeWidth, y: CHART_HEIGHT + strokeWidth });
-
-            var pathStr = points.map(function (p) { return p.x + ',' + p.y; }).join(' ');
-
-            var area = chart.polygon(pathStr);
-            area.attr({'class': 'line-chart',
-                       'stroke-width': strokeWidth});
         });
 
-        $dataTable.replaceWith(container);
+        // Normalise values into the range [0, 1]
+        var max = Math.max.apply(null, rawValues);
+        var relativeValues = rawValues.map(function (val) {
+            return val / max;
+        });
+
+        var chart = new LineChart($dataTable.attr('summary'));
+        $dataTable.replaceWith(chart.element);
+        chart.draw(relativeValues);
     }
 
     // ----------------------------------------
     // Initialisation
 
     $(function () {
-        initBugRateChart({
-            dataTable: $('#bug-rate-data')
-		});
-
-	    initBugCountChart({
-            dataTable: $('#open-bug-data')
-		});
-
+        initBugRateChart();
+        initBugCountChart();
         // Refresh every 10 minutes to get latest data
         window.setTimeout(function () { window.location.reload(); }, 1000 * 60 * 10);
     });
