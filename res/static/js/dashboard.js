@@ -75,7 +75,7 @@ survivor.dashboard = (function () {
                     var col = chart.rect(colWidth, colHeight);
                     col.attr({'x': hOffset,
                               'y': vOffset,
-                              'class': colIdx ? 'bugs-closed-column' : 'bugs-opened-column',
+                              'class': colIdx ? 'bugs-opened-column' : 'bugs-closed-column',
                               'stroke-width': 0});
                 });
             });
