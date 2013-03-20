@@ -75,7 +75,7 @@ survivor.dashboard = (function () {
                     var col = chart.rect(colWidth, colHeight);
                     col.attr({'x': hOffset,
                               'y': vOffset,
-                              'fill': args.colours[colIdx],
+                              'class': colIdx ? 'bugs-closed-column' : 'bugs-opened-column',
                               'stroke-width': 0});
                 });
             });
@@ -129,11 +129,8 @@ survivor.dashboard = (function () {
             var pathStr = points.map(function (p) { return p.x + ',' + p.y; }).join(' ');
 
             var area = chart.polygon(pathStr);
-            area.attr({
-                'stroke': args.colours.line,
-                'stroke-width': strokeWidth,
-                'fill': args.colours.area
-            });
+            area.attr({'class': 'line-chart',
+                       'stroke-width': strokeWidth});
         });
 
         $dataTable.replaceWith(container);
@@ -144,13 +141,11 @@ survivor.dashboard = (function () {
 
     $(function () {
         initBugRateChart({
-            dataTable: $('#bug-rate-data'),
-		    colours: ['#E63A16', '#153B5F']
+            dataTable: $('#bug-rate-data')
 		});
 
 	    initBugCountChart({
-            dataTable: $('#open-bug-data'),
-		    colours: { line: '#E63A16', area: '#5F1A0A' }
+            dataTable: $('#open-bug-data')
 		});
 
         // Refresh every 10 minutes to get latest data
