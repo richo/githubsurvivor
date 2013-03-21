@@ -1,14 +1,64 @@
-// 
-@primary-colour: #EB3B16;
+html.github {
 
-//
-@secondary-colour: #8CA4C0;
+  @primary-colour: #EB3B16;
+  @secondary-colour: #8CA4C0;
+  @panel-lowlight: #CB0C00;
+  @delta-good-colour: #153B5F;
+  @delta-bad-colour: #5F1A0A;
 
-//
-@panel-lowlight: #CB0C00;
+  body { color: @primary-colour; }
 
-//
-@delta-good-colour: #153B5F;
+  .panel {
+    background-color: @primary-colour;
+    border-bottom-color: @panel-lowlight;
+    border-right-color: @panel-lowlight;
+    box-shadow: 0 0 1.25em @panel-lowlight;
+  }
 
-//
-@delta-bad-colour: #5F1A0A;
+  #banner .info {
+    .company { color: #FDB22B; }
+    .date { color: #5E1A0F; }
+  }
+
+  .leaderboard {
+    ol { text-shadow: 0 0 0.75em @panel-lowlight; }
+    .avatar, li:before {
+      border-color: @primary-colour;
+      box-shadow: 0 0 0.5em @panel-lowlight;
+    }
+  }
+
+  .chart-container {
+    box-shadow: inset 0 0 0.5em @panel-lowlight;
+    label {
+      color: @secondary-colour;
+      text-shadow: 0 0 0.5em #486584;
+    }
+  }
+
+  .chart {
+    .column-0 { fill: #E63A16; }
+    .column-1 { fill: #153B5F; }
+    .line-chart {
+      stroke: #E63A16;
+      fill: #5F1A0A;
+    }
+  }
+
+  #current-stats {
+    text-shadow: 0 0 1em @panel-lowlight;
+    .delta { color: #5E1A0F; }
+  }
+
+  #footer {
+    text-shadow: 0 0 1em @panel-lowlight;
+    .start {
+      color: #FFB400;
+      text-shadow: 0 0 1em #E6A100;
+    }
+  }
+
+  .red { background-color: #F60D1E; }
+  .orange { background-color: #FF8000; }
+  .gold { background-color: #FFB400; }
+}
