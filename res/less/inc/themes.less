@@ -12,7 +12,7 @@ html.github {
     background-color: @primary-colour;
     border-bottom-color: @panel-lowlight;
     border-right-color: @panel-lowlight;
-    box-shadow: 0 0 1.25em @panel-lowlight;
+    .box-glow (1.25em, @panel-lowlight);
   }
 
   #banner .info {
@@ -21,18 +21,18 @@ html.github {
   }
 
   .leaderboard {
-    ol { text-shadow: 0 0 0.75em @panel-lowlight; }
+    ol { .text-glow (0.75em, @panel-lowlight); }
     .avatar, li:before {
       border-color: @primary-colour;
-      box-shadow: 0 0 0.5em @panel-lowlight;
+      .box-glow (0.5em, @panel-lowlight);
     }
   }
 
   .chart-container {
-    box-shadow: inset 0 0 0.5em @panel-lowlight;
+    .box-glow-inner (0.5em, @panel-lowlight);
     label {
       color: @secondary-colour;
-      text-shadow: 0 0 0.5em #486584;
+      .text-glow (0.5em, #486584);
     }
   }
 
@@ -46,15 +46,15 @@ html.github {
   }
 
   #current-stats {
-    text-shadow: 0 0 1em @panel-lowlight;
+    .text-glow (1em, @panel-lowlight);
     .delta { color: #5E1A0F; }
   }
 
   #footer {
-    text-shadow: 0 0 1em @panel-lowlight;
+    .text-glow (1em, @panel-lowlight);
     .start {
       color: #FFB400;
-      text-shadow: 0 0 1em #E6A100;
+      .text-glow (1em, #E6A100);
     }
   }
 
