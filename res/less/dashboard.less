@@ -59,7 +59,8 @@ body {
 
   h2 {
     display: inline-block;
-    background: url('/img/banner.png') left top repeat-x;
+    background-position: left top;
+    background-repeat: repeat-x;
     color: black;
     text-transform: uppercase;
     font-weight: normal;
@@ -70,7 +71,8 @@ body {
     span {
       display: block;
       padding: 0 50px 0 25px;
-      background: url('/img/banner-end.png') right top no-repeat;
+      background-position: right top;
+      background-repeat: no-repeat;
     }
   }
 
@@ -95,7 +97,8 @@ body {
 
   li {
     position: relative;
-    background: url('/img/dot.png') 0 33px repeat-x;
+    background-position: 0 33px;
+    background-repeat: repeat-x;
     line-height: @box-size + 2 * @border-size;
     margin: 12px 0;
     padding: 0;
@@ -183,9 +186,6 @@ body {
     font-size: 70px;
     background-position: left 50;
     background-repeat: no-repeat;
-
-    &.pos { background-image: url('/img/arrow-up.png'); }
-    &.neg { background-image: url('/img/arrow-down.png'); }
   }
 }
 

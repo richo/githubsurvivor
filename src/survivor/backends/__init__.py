@@ -26,4 +26,5 @@ def issue_importer():
 def web_theme():
     backend_name = _backend_name()
     return {'html_classname': backend_name,
-            'appname': '%s SURVIVOR' % backend_name.upper()}
+            'appname': '%s SURVIVOR' % backend_name.upper(),
+            'logo_url': '/img/%s/logo.png' % backend_name}
