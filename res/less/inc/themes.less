@@ -1,10 +1,10 @@
 html.github {
 
   @primary-colour: #EB3B16;
-  @secondary-colour: #8CA4C0;
+  @text-colour-1: #FDB22B;
+  @text-colour-2: #5E1A0F;
+  @text-colour-3: #8CA4C0;
   @panel-lowlight: #CB0C00;
-  @delta-good-colour: #153B5F;
-  @delta-bad-colour: #5F1A0A;
 
   body { color: @primary-colour; }
 
@@ -16,8 +16,8 @@ html.github {
   }
 
   #banner .info {
-    .company { color: #FDB22B; }
-    .date { color: #5E1A0F; }
+    .company { color: @text-colour-1; }
+    .date { color: @text-colour-2; }
   }
 
   .leaderboard {
@@ -31,30 +31,30 @@ html.github {
   .chart-container {
     .box-glow-inner (0.5em, @panel-lowlight);
     label {
-      color: @secondary-colour;
-      .text-glow (0.5em, #486584);
+      color: @text-colour-3;
+      .text-glow (0.5em, darken(@text-colour-3, 20%));
     }
   }
 
   .chart {
-    .column-0 { fill: #E63A16; }
+    .column-0 { fill: @primary-colour; }
     .column-1 { fill: #153B5F; }
     .line-chart {
-      stroke: #E63A16;
+      stroke: @primary-colour;
       fill: #5F1A0A;
     }
   }
 
   #current-stats {
     .text-glow (1em, @panel-lowlight);
-    .delta { color: #5E1A0F; }
+    .delta { color: @text-colour-2; }
   }
 
   #footer {
     .text-glow (1em, @panel-lowlight);
     .start {
-      color: #FFB400;
-      .text-glow (1em, #E6A100);
+      color: @text-colour-1;
+      .text-glow (1em, darken(@text-colour-1, 12%));
     }
   }
 
