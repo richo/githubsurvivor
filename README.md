@@ -73,6 +73,18 @@ Stylesheets are LESS files. Run `make css` to regenerate CSS from LESS sources.
 
 MIT; see `LICENSE`
 
+## Contributors
+
+In chronological order of first contribution:
+
+ * Chris Campbell ([dannymidnight](https://github.com/dannymidnight))
+ * Stuart Campbell ([harto](https://github.com/harto))
+ * Alec Sloman ([alecsloman](https://github.com/alecsloman))
+ * Michael De Wildt ([michaeldewildt](https://github.com/michaeldewildt))
+ * Alexander ([asm89](https://github.com/shawnps))
+ * Sam Keen ([samkeen](https://github.com/samkeen))
+ * Shawn Smith ([shawnps](https://github.com/shawnps))
+
 [1]: http://99designs.com
 [2]: http://developer.github.com/v3/issues/
 [3]: http://docs.atlassian.com/jira/REST/latest/
