@@ -23,3 +23,15 @@
   -moz-animation-iteration-count: @iteration-count;
   -webkit-animation-iteration-count: @iteration-count;
 }
+
+.text-glow (@radius, @colour) {
+  text-shadow: 0 0 @radius @colour;
+}
+
+.box-glow (@radius, @colour) {
+  box-shadow: 0 0 @radius @colour;
+}
+
+.box-glow-inner (@radius, @colour) {
+  box-shadow: inset 0 0 @radius @colour;
+}

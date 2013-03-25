@@ -16,10 +16,10 @@
 		<!-- Banner -->
 		<div id="banner" class="row-fluid panel">
 			<div class="span12">
-				<hr class="stripe red" />
-				<hr class="stripe orange" />
-				<hr class="stripe gold" />
-				<img class="logo" src="/img/logo.png" />
+				<hr class="stripe stripe-1" />
+				<hr class="stripe stripe-2" />
+				<hr class="stripe stripe-3" />
+				<img class="logo" src="{{ theme.logo_url }}" />
 				<div class="info">
 					<span class="company">99designs</span>
 					<span class="date">{{ today | format_datetime('%a.%d%m%y') }}</span>
@@ -55,9 +55,9 @@
 		<div id="charts" class="row-fluid panel">
 
 			<div class="span12">
-				<hr class="stripe red" />
-				<hr class="stripe orange" />
-				<hr class="stripe gold" />
+				<hr class="stripe stripe-1" />
+				<hr class="stripe stripe-2" />
+				<hr class="stripe stripe-3" />
 			</div>
 
 			<div class="span4">
@@ -113,7 +113,7 @@
 		</div>
 
 		<div id="footer" class="row-fluid">
-			GitHub Survivor TM & Copyright 1987 99designs dev team
+			{{ theme.appname }} TM & Copyright 1987 99designs dev team
 			<span class="start">&lt;Insert coin to begin playing&gt;</span>
 		</div>
 
