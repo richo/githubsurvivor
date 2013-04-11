@@ -1,3 +1,4 @@
+from argparse import ArgumentParser
 from datetime import datetime
 from itertools import islice
 from os.path import join
@@ -128,7 +129,11 @@ def start_server():
     app.run(**config['flask.settings'])
 
 def main(arguments=None):
-    init()
+    parser = ArgumentParser(description='Starts GitHub Survivor web application')
+    parser.add_argument('-c', '--config', help='path to configuration file')
+    args = parser.parse_args(arguments)
+
+    init(args.config)
     start_server()
 
 if __name__ == '__main__':
