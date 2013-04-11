@@ -1,12 +1,12 @@
-import os
 from datetime import datetime
 from itertools import islice
+from os.path import join
 from random import shuffle
 
 from flask import Flask, render_template, request
 from jinja2 import FileSystemLoader
 
-from survivor import reporting, timeutils, app_root, config
+from survivor import init, config, app_root, reporting, timeutils
 from survivor.models import User, Issue
 from survivor.web import template
 
@@ -116,13 +116,20 @@ def unassigned():
 
 ### Initialisation
 
-if __name__ == "__main__":
+def start_server():
     template.register_helpers(app)
     root = app_root()
-    app.jinja_loader = FileSystemLoader(os.path.join(root, 'templates'))
+    app.jinja_loader = FileSystemLoader(join(root, 'templates'))
     app.static_folder = '%s/res/static' % root
 
     try: app.debug = config['flask.debug']
     except KeyError: pass
 
     app.run(**config['flask.settings'])
+
+def main(arguments=None):
+    init()
+    start_server()
+
+if __name__ == '__main__':
+    main()
