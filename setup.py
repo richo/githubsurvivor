@@ -23,4 +23,10 @@ setup(
     package_dir={'': 'src'},
     long_description=slurp('README.md'),
     classifiers=('Development Status :: 4 - Beta',),
+    entry_points={
+        'console_scripts': [
+            'githubsurvivor=survivor.web:main',
+            'githubsurvivor-sync=survivor.tasks.sync:main',
+        ],
+    },
 )
