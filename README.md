@@ -81,6 +81,7 @@ In chronological order of first contribution:
  * Stuart Campbell ([harto](https://github.com/harto))
  * Alec Sloman ([alecsloman](https://github.com/alecsloman))
  * Michael De Wildt ([michaeldewildt](https://github.com/michaeldewildt))
+ * Kyle Lin
  * Alexander ([asm89](https://github.com/asm89))
  * Sam Keen ([samkeen](https://github.com/samkeen))
  * Shawn Smith ([shawnps](https://github.com/shawnps))
