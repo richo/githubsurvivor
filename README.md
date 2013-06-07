@@ -6,6 +6,7 @@ count and remind ourselves to close bugs.
 
 ![Screenshot](https://github.com/99designs/githubsurvivor/wiki/screenshot.png)
 
+
 ## Overview
 
 It's easy to forget about bugs when you're knee-deep in feature development.
@@ -25,6 +26,7 @@ it in a local Mongo DB for subsequent querying. It shows, at a glance:
 There are bug trackers that provide this kind of data, but we wanted something
 fun that integrates with our existing bug tracking solution.
 
+
 ## Supported issue trackers
 
 GitHub Survivor can integrate with these issue trackers out of the box:
@@ -34,44 +36,94 @@ GitHub Survivor can integrate with these issue trackers out of the box:
 
 Read more about [defining backends][5] in the wiki.
 
+
 ## Setup
 
 Requirements:
 
-* Python >= 2.7
-* virtualenv
-* MongoDB
-* lessc
-* Make
+ * Python >= 2.7
+ * MongoDB
 
 This command might satisfy the above dependencies on Ubuntu:
 
-    $ sudo apt-get install python2.7 python-virtualenv mongodb lessc make
+```bash
+$ sudo apt-get install python2.7 mongodb
+```
 
-### Installation
+Additional requirements for development:
 
-    $ git clone https://github.com/99designs/githubsurvivor.git /path/to/survivor
-    $ cd /path/to/survivor
-    $ bin/setup
-    $ $EDITOR config.py
+ * lessc
+ * Make
 
-### Initial data import
+This command might satisfy the above dependencies on Ubuntu:
 
-    $ bin/runtask sync
+```bash
+$ sudo apt-get install lessc make
+```
+
+virtualenv is also recommended:
+
+```bash
+$ sudo apt-get install python-virtualenv
+```
+
+### 1. Installation
+
+If you're using virtualenv, create and activate your environment:
+
+```bash
+$ virtualenv env
+$ . env/bin/activate
+```
+
+Install the githubsurvivor package with pip:
+
+```bash
+$ pip install githubsurvivor
+```
+
+### 2. Configuration
+
+Generate and edit your configuration:
+
+```bash
+$ githubsurvivor-dump-config >/path/to/config
+$ $EDITOR config.py
+```
+
+### 3. Initial data import
+
+```bash
+$ githubsurvivor-sync -c /path/to/config
+```
 
 You'll probably want to run this periodically, e.g. in an hourly cron job.
 
-### Run
+### 4. Run
 
-    $ bin/serve
+```bash
+$ githubsurvivor -c /path/to/config
+```
 
 ### Development notes
 
+Checkout from git and initialise with `setup.py`:
+
+```bash
+$ git clone https://github.com/99designs/githubsurvivor.git
+$ cd githubsurvivor
+$ virtualenv env
+$ . env/bin/activate
+$ python setup.py develop
+```
+
 Stylesheets are LESS files. Run `make css` to regenerate CSS from LESS sources.
+
 
 ## License
 
 MIT; see `LICENSE`
+
 
 ## Contributors
 
