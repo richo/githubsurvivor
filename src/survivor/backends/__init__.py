@@ -12,19 +12,16 @@ database. The importer looks like this:
 
 from survivor import config
 
-def _backend_name():
-    return config.get('backend', 'github')
-
-def backend_for(config):
-    "Import and return the backend according to `config`."
-    module_name = 'survivor.backends.%s' % _backend_name()
+def configured_backend():
+    "Import and return the configured backend."
+    module_name = 'survivor.backends.%s' % config.BACKEND
     return __import__(module_name, fromlist=module_name)
 
 def issue_importer():
-    return backend_for(config).issue_importer(config)
+    return configured_backend().issue_importer(config)
 
 def web_theme():
-    backend_name = _backend_name()
+    backend_name = config.BACKEND
     return {'html_classname': backend_name,
             'appname': '%s SURVIVOR' % backend_name.upper(),
             'logo_url': '/img/%s/logo.png' % backend_name}

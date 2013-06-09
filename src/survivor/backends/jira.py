@@ -49,10 +49,10 @@ def create_issue(jira_issue):
 class Importer(object):
 
     def __init__(self, config):
-        username = config['jira.username']
-        password = config['jira.password']
-        server = config['jira.server']
-        project = config['jira.project']
+        username = config.JIRA_USERNAME
+        password = config.JIRA_PASSWORD
+        server = config.JIRA_SERVER
+        project = config.JIRA_PROJECT
 
         self.jira = JIRA(basic_auth=(username, password), options={'server': server})
         self.project = project

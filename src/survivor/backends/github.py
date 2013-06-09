@@ -25,7 +25,7 @@ def create_user(gh_user):
                     name=gh_user.name,
                     avatar_url='//www.gravatar.com/avatar/%s?s=52' % gh_user.gravatar_id,
                     assigned_issues_url='https://github.com/%s/issues/assigned/%s' % \
-                        (config['github.repo'], gh_user.login))
+                        (config.GITHUB_REPO, gh_user.login))
         return user.save()
 
 def create_issue(gh_issue):
@@ -43,8 +43,8 @@ def create_issue(gh_issue):
 class Importer(object):
 
     def __init__(self, config):
-        auth_token = config['github.oauth_token']
-        account_name, repo_name = config['github.repo'].split('/')
+        auth_token = config.GITHUB_OAUTH_TOKEN
+        account_name, repo_name = config.GITHUB_REPO.split('/')
         account = Github(auth_token).get_user(account_name)
         self.repo = account.get_repo(repo_name)
 

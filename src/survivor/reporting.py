@@ -24,13 +24,13 @@ def weekly_reporting_period(anchor, offset=0):
 ### Sprint reporting
 
 def _sprint_start_weekday():
-    day_name = config['reporting.sprint_start_weekday']
+    day_name = config.REPORTING_SPRINT_START_WEEKDAY
     return getattr(days, day_name[:2].upper())
 
 def _sprint_end(anchor):
     sprint_start_weekday = _sprint_start_weekday()
-    sprint_length_weeks = config['reporting.sprint_length_weeks']
-    first_sprint_week_of_year = config['reporting.first_sprint_week_of_year']
+    sprint_length_weeks = config.REPORTING_SPRINT_LENGTH_WEEKS
+    first_sprint_week_of_year = config.REPORTING_FIRST_SPRINT_WEEK_OF_YEAR
 
     # Find the next instance of the sprint start/end weekday
     # This will either be the end date of a sprint, or the equivalent
@@ -45,7 +45,7 @@ def _sprint_end(anchor):
     return anchor + relativedelta(weeks=sprint_weeks_remaining)
 
 def sprint_reporting_period(anchor, offset=0):
-    sprint_length_weeks = config['reporting.sprint_length_weeks']
+    sprint_length_weeks = config.REPORTING_SPRINT_LENGTH_WEEKS
     end = _sprint_end(anchor) + relativedelta(weeks=offset * sprint_length_weeks)
     return Period(end - relativedelta(weeks=sprint_length_weeks), end)
 

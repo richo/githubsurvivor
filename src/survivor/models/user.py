@@ -9,7 +9,7 @@ class UserQuerySet(QuerySet):
     """
     def developers(self):
         "Return all those users that should be included in the leaderboard."
-        whitelist = config['leaderboard_users']
+        whitelist = config.LEADERBOARD_USERS
         return [u for u in self.all() if not whitelist or u.login in whitelist]
 
 class User(Document):

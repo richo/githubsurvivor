@@ -7,8 +7,9 @@ from random import shuffle
 from flask import Flask, render_template, request
 from jinja2 import FileSystemLoader
 
-from survivor import init, config, app_root, reporting, timeutils
+from survivor import init, config, reporting, timeutils
 from survivor.models import User, Issue
+from survivor.utils import app_root
 from survivor.web import template
 
 app = Flask(__name__, static_url_path='')
@@ -39,7 +40,7 @@ def reporting_period(unit, anchor, offset=0):
 def dashboard():
     today = timeutils.today()
 
-    reporting_unit = request_arg('reporting_unit', default=config['reporting.window'])
+    reporting_unit = request_arg('reporting_unit', default=config.REPORTING_WINDOW)
     previous_periods = int(request_arg('previous_periods', default=12))
 
     reporting_periods = [reporting_period(reporting_unit, today, -i)
@@ -123,10 +124,8 @@ def start_server():
     app.jinja_loader = FileSystemLoader(join(root, 'templates'))
     app.static_folder = '%s/res/static' % root
 
-    try: app.debug = config['flask.debug']
-    except KeyError: pass
-
-    app.run(**config['flask.settings'])
+    app.debug = config.FLASK_DEBUG
+    app.run(**config.FLASK_SETTINGS)
 
 def main(arguments=None):
     parser = ArgumentParser(description='Starts GitHub Survivor web application')
