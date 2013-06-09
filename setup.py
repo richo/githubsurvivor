@@ -38,6 +38,7 @@ setup(
         'console_scripts': [
             'githubsurvivor=survivor.web:main',
             'githubsurvivor-sync=survivor.tasks.sync:main',
+            'githubsurvivor-generate-config=survivor.config:generate'
         ],
     },
 )

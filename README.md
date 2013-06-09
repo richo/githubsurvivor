@@ -87,7 +87,7 @@ $ pip install githubsurvivor
 Generate and edit your configuration:
 
 ```bash
-$ githubsurvivor-dump-config >/path/to/config
+$ githubsurvivor-generate-config >/path/to/config
 $ $EDITOR config.py
 ```
 
@@ -137,6 +137,7 @@ In chronological order of first contribution:
  * Alexander ([asm89](https://github.com/asm89))
  * Sam Keen ([samkeen](https://github.com/samkeen))
  * Shawn Smith ([shawnps](https://github.com/shawnps))
+
 
 [1]: http://99designs.com
 [2]: http://developer.github.com/v3/issues/

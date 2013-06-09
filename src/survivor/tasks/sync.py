@@ -22,7 +22,7 @@ def sync(types, verbose=False):
         Issue.drop_collection()
         importer.import_issues(verbose)
 
-def main(arguments=None):
+def main():
     argparser = argparse.ArgumentParser(description='Synchronises local DB with GitHub')
     argparser.add_argument('-c', '--config', help='path to configuration file')
     argparser.add_argument('-v', '--verbose', dest='verbose', action='store_true', help='verbose output')

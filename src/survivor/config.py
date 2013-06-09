@@ -85,7 +85,6 @@ c.define('REPORTING_FIRST_SPRINT_WEEK_OF_YEAR',
 class Config(object):
 
     def load(self, config_path):
-        # verify_config(config_path)
         self._config = c.load(config_path or self.default_path())
 
     def default_path(self):
@@ -95,5 +94,5 @@ class Config(object):
         if not self._config: raise 'Not initialised'
         return getattr(self._config, key)
 
-    def generate(self):
-        generate_config()
+def generate():
+    generate_config()
