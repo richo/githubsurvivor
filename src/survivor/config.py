@@ -98,12 +98,12 @@ class Config(object):
         finally /etc.
         """
         if not config_path:
-            config_path = c.get_conf_file(DEFAULT_FILENAME, SEARCH_DIRS)
+            config_path = c.get_conf_file(self.DEFAULT_FILENAME, self.SEARCH_DIRS)
 
         if not config_path:
             raise Exception(
                 'No configuration provided, and none found at any of %s' % \
-                    ', '.join(path.join(d, DEFAULT_FILENAME) for d in SEARCH_DIRS))
+                    ', '.join(path.join(d, self.DEFAULT_FILENAME) for d in self.SEARCH_DIRS))
 
         self._config = c.load(config_path or self._default_path())
 
