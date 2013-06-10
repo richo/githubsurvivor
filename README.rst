@@ -24,6 +24,7 @@ it in a local Mongo DB for subsequent querying. It shows, at a glance:
 - Current open bug count
 - Net difference in open bugs since the last reporting period
 - Charts (yay!):
+
   - Number of bugs opened/closed for the last 12 reporting periods
   - Number of open bugs over the last 12 reporting periods
 
@@ -57,13 +58,14 @@ This command might satisfy the above dependencies on Ubuntu::
 
    $ sudo apt-get install python2.7 mongodb python-virtualenv
 
-#. Install package using `pip install githubsurvivor`
-#. Generate a configuration file using `githubsurvivor-generate-config`
-#. Do an initial import of your bugs using `githubsurvivor-sync`
-#. Start the server using `githubsurvivor`
+#. Install package using ``pip install githubsurvivor``
+#. Generate a configuration file using ``githubsurvivor-generate-config``
+#. Do an initial import of your bugs using ``githubsurvivor-sync``
+#. Start the server using ``githubsurvivor``
 
 For detailed instructions, see
 https://github.com/99designs/githubsurvivor/wiki/Installation
+
 
 -------------------
  Development notes
@@ -71,11 +73,12 @@ https://github.com/99designs/githubsurvivor/wiki/Installation
 
 See https://github.com/99designs/githubsurvivor/wiki/Development
 
+
 ---------
  License
 ---------
 
-MIT; see `LICENSE`
+MIT; see LICENSE_
 
 
 --------------
@@ -90,3 +93,4 @@ See https://github.com/99designs/githubsurvivor/wiki/Contributors
 .. _JIRA: http://docs.atlassian.com/jira/REST/latest/
 .. _jirasurvivor: https://github.com/gengo/jirasurvivor
 .. _defining backends: https://github.com/99designs/githubsurvivor/wiki/Backends
+.. _LICENSE: https://github.com/99designs/githubsurvivor/blob/master/LICENSE
