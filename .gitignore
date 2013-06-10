@@ -1,7 +1,4 @@
 *.pyc
-/env
-/config.py
-
 /build
 /dist
-*.egg-info
+/src/githubsurvivor.egg-info
