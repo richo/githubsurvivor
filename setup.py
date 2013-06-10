@@ -7,7 +7,7 @@ def slurp(fname):
         f.read()
 
 setup(
-    name='GitHub Survivor',
+    name='githubsurvivor',
     version='0.0.1',
     author='99designs',
     author_email='stuart.campbell@99designs.com',
