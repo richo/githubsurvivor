@@ -1,3 +1,2 @@
-include README.md
 recursive-include templates *.jinja2
 recursive-include res/static *.ico *.html *.png *.ttf *.js *.css
