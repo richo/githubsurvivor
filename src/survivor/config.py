@@ -1,4 +1,4 @@
-from os.path import join
+from os import path
 
 from derpconf.config import Config as c, verify_config, generate_config
 
@@ -87,14 +87,30 @@ c.define('REPORTING_FIRST_SPRINT_WEEK_OF_YEAR',
 
 class Config(object):
 
-    def load(self, config_path):
-        self._config = c.load(config_path or self.default_path())
+    DEFAULT_FILENAME = 'githubsurvivor.conf'
+    SEARCH_DIRS = [path.curdir,
+                   path.expanduser('~'),
+                   '/etc']
 
-    def default_path(self):
-        return join(app_root(), 'config.py')
+    def load(self, config_path=None):
+        """
+        Load configuration from file. If no config path is given, several
+        directories are searched for a file named 'githubsurvivor.conf': the
+        current directory, followed by the current user's home directory, then
+        finally /etc.
+        """
+        if not config_path:
+            config_path = c.get_conf_file(DEFAULT_FILENAME, SEARCH_DIRS)
+
+        if not config_path:
+            raise Exception(
+                'No configuration provided, and none found at any of %s' % \
+                    ', '.join(path.join(d, DEFAULT_FILENAME) for d in SEARCH_DIRS))
+
+        self._config = c.load(config_path or self._default_path())
 
     def __getattr__(self, key):
-        if not self._config: raise 'Not initialised'
+        if not self._config: raise Exception('Not initialised')
         return getattr(self._config, key)
 
 def generate():
