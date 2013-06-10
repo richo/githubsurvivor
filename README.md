@@ -37,75 +37,30 @@ GitHub Survivor can integrate with these issue trackers out of the box:
 Read more about [defining backends][5] in the wiki.
 
 
-## Setup
+## Quick setup
 
 Requirements:
 
  * Python >= 2.7
  * MongoDB
+ * virtualenv (recommended)
 
 This command might satisfy the above dependencies on Ubuntu:
 
 ```bash
-$ sudo apt-get install python2.7 mongodb
+$ sudo apt-get install python2.7 mongodb python-virtualenv
 ```
 
-Additional requirements for development:
+ 1. Install package using `pip install githubsurvivor`
+ 1. Generate a configuration file using `githubsurvivor-generate-config`
+ 2. Do an initial import of your bugs using `githubsurvivor-sync`
+ 3. Start the server using `githubsurvivor`
 
- * lessc
- * Make
+For detailed instructions, see
+https://github.com/99designs/githubsurvivor/wiki/Installation
 
-This command might satisfy the above dependencies on Ubuntu:
 
-```bash
-$ sudo apt-get install lessc make
-```
-
-virtualenv is also recommended:
-
-```bash
-$ sudo apt-get install python-virtualenv
-```
-
-### 1. Installation
-
-If you're using virtualenv, create and activate your environment:
-
-```bash
-$ virtualenv env
-$ . env/bin/activate
-```
-
-Install the githubsurvivor package with pip:
-
-```bash
-$ pip install githubsurvivor
-```
-
-### 2. Configuration
-
-Generate and edit your configuration:
-
-```bash
-$ githubsurvivor-generate-config >/path/to/config
-$ $EDITOR config.py
-```
-
-### 3. Initial data import
-
-```bash
-$ githubsurvivor-sync -c /path/to/config
-```
-
-You'll probably want to run this periodically, e.g. in an hourly cron job.
-
-### 4. Run
-
-```bash
-$ githubsurvivor -c /path/to/config
-```
-
-### Development notes
+## Development notes
 
 See https://github.com/99designs/githubsurvivor/wiki/Development
 
