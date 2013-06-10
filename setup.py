@@ -12,7 +12,7 @@ setup(
     author='99designs',
     author_email='stuart.campbell@99designs.com',
     description='A retro-style bug leaderboard',
-    long_description=slurp('README.md'),
+    long_description=slurp('README.rst'),
     license='MIT',
     keywords='bug dashboard leaderboard github jira',
     url='https://github.com/99designs/githubsurvivor',
