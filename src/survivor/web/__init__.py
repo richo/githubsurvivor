@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 from datetime import datetime
 from itertools import islice
-from os.path import join
+from os.path import dirname, join
 from random import shuffle
 
 from flask import Flask, render_template, request
@@ -9,7 +9,6 @@ from jinja2 import FileSystemLoader
 
 from survivor import init, config, reporting, timeutils
 from survivor.models import User, Issue
-from survivor.utils import app_root
 from survivor.web import template
 
 app = Flask(__name__, static_url_path='')
@@ -120,7 +119,8 @@ def unassigned():
 
 def start_server():
     template.register_helpers(app)
-    root = app_root()
+
+    root = dirname(dirname(dirname(__file__)))
     app.jinja_loader = FileSystemLoader(join(root, 'templates'))
     app.static_folder = '%s/res/static' % root
 
