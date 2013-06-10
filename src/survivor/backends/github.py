@@ -42,7 +42,7 @@ def create_issue(gh_issue):
 
 class Importer(object):
 
-    def __init__(self, config):
+    def __init__(self):
         auth_token = config.GITHUB_OAUTH_TOKEN
         account_name, repo_name = config.GITHUB_REPO.split('/')
         account = Github(auth_token).get_user(account_name)
@@ -65,5 +65,5 @@ class Importer(object):
         return itertools.chain(self.repo.get_issues(state='open'),
                                self.repo.get_issues(state='closed'))
 
-def issue_importer(config):
-    return Importer(config)
+def issue_importer():
+    return Importer()

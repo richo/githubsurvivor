@@ -10,6 +10,7 @@ import iso8601
 from jira.client import JIRA
 from mongoengine import *
 
+from survivor import config
 from survivor.models import User, Issue
 
 MAX_ISSUE_RESULTS = 99999
@@ -48,7 +49,7 @@ def create_issue(jira_issue):
 
 class Importer(object):
 
-    def __init__(self, config):
+    def __init__(self):
         username = config.JIRA_USERNAME
         password = config.JIRA_PASSWORD
         server = config.JIRA_SERVER
@@ -75,5 +76,5 @@ class Importer(object):
             'project=%s and (status=OPEN or status=CLOSED)' % self.project,
             maxResults=MAX_ISSUE_RESULTS)
 
-def issue_importer(config):
-    return Importer(config)
+def issue_importer():
+    return Importer()

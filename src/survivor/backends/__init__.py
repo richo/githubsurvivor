@@ -5,9 +5,12 @@ Implementations provide a way to import users and issues into the local
 database. The importer looks like this:
 
     class Importer:
-        def __init__(self, config)
-        def import_users(self)
+
+        def import_users(self):
+            # import all leaderboard users from repo
+
         def import_issues(self)
+            # import all issues from repo
 """
 
 from survivor import config
@@ -18,7 +21,7 @@ def configured_backend():
     return __import__(module_name, fromlist=module_name)
 
 def issue_importer():
-    return configured_backend().issue_importer(config)
+    return configured_backend().issue_importer()
 
 def web_theme():
     backend_name = config.BACKEND
