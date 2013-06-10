@@ -107,18 +107,7 @@ $ githubsurvivor -c /path/to/config
 
 ### Development notes
 
-Checkout from git and initialise with `setup.py`:
-
-```bash
-$ git clone https://github.com/99designs/githubsurvivor.git
-$ cd githubsurvivor
-$ virtualenv env
-$ . env/bin/activate
-$ python setup.py develop
-```
-
-Stylesheets are LESS files. Run `make css` to regenerate CSS from LESS sources.
-
+See https://github.com/99designs/githubsurvivor/wiki/Development
 
 ## License
 
