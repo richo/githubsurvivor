@@ -1,5 +1,8 @@
 from os.path import join
+
 from derpconf.config import Config as c, verify_config, generate_config
+
+from survivor.utils import app_root
 
 # Core options
 
