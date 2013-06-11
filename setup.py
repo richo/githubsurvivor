@@ -24,7 +24,7 @@ setup(
               'survivor.tasks',
               'survivor.web'],
 
-    package_dir={'': 'src'},
+    package_dir={'survivor': 'survivor'},
 
     install_requires=['Flask==0.9',
                       'mongoengine==0.8.1',
