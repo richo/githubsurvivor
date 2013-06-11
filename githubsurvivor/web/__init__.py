@@ -121,7 +121,7 @@ def start_server():
     template.register_helpers(app)
 
     here = dirname(__file__)
-    app.jinja_loader = FileSystemLoader(here, 'templates')
+    app.jinja_loader = FileSystemLoader(join(here, 'templates'))
     app.static_folder = join(here, 'static')
 
     app.debug = config.FLASK_DEBUG
