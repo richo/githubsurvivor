@@ -1,17 +1,16 @@
-LESS=res/less
-CSS=githubsurvivor/web/static/styles
+STYLES=githubsurvivor/web/static/styles
 
 .PHONY: build css clean dist
 
 build: css
 
-$(CSS)/%.css: $(LESS)/%.less
+$(STYLES)/%.css: $(STYLES)/%.less
 	lessc $< >$@
 
-css: $(patsubst $(LESS)/%.less,$(CSS)/%.css,$(wildcard $(LESS)/*.less))
+css: $(patsubst $(STYLES)/%.less,$(STYLES)/%.css,$(wildcard $(STYLES)/*.less))
 
 clean:
-	rm $(CSS)/*.css
+	rm $(STYLES)/*.css
 
 dist: clean build
 	python setup.py clean sdist upload
