@@ -1,14 +1,15 @@
-import os
+from argparse import ArgumentParser
 from datetime import datetime
 from itertools import islice
+from os.path import dirname, join
 from random import shuffle
 
 from flask import Flask, render_template, request
 from jinja2 import FileSystemLoader
 
-from survivor import reporting, timeutils, app_root, config
-from survivor.models import User, Issue
-from survivor.web import template
+from githubsurvivor import init, config, reporting, timeutils
+from githubsurvivor.models import User, Issue
+from githubsurvivor.web import template
 
 app = Flask(__name__, static_url_path='')
 
@@ -38,7 +39,7 @@ def reporting_period(unit, anchor, offset=0):
 def dashboard():
     today = timeutils.today()
 
-    reporting_unit = request_arg('reporting_unit', default=config['reporting.window'])
+    reporting_unit = request_arg('reporting_unit', default=config.REPORTING_WINDOW)
     previous_periods = int(request_arg('previous_periods', default=12))
 
     reporting_periods = [reporting_period(reporting_unit, today, -i)
@@ -116,13 +117,23 @@ def unassigned():
 
 ### Initialisation
 
-if __name__ == "__main__":
+def start_server():
     template.register_helpers(app)
-    root = app_root()
-    app.jinja_loader = FileSystemLoader(os.path.join(root, 'templates'))
-    app.static_folder = '%s/res/static' % root
 
-    try: app.debug = config['flask.debug']
-    except KeyError: pass
+    here = dirname(__file__)
+    app.jinja_loader = FileSystemLoader(join(here, 'templates'))
+    app.static_folder = join(here, 'static')
 
-    app.run(**config['flask.settings'])
+    app.debug = config.FLASK_DEBUG
+    app.run(**config.FLASK_SETTINGS)
+
+def main(arguments=None):
+    parser = ArgumentParser(description='Starts GitHub Survivor web application')
+    parser.add_argument('-c', '--config', help='path to configuration file')
+    args = parser.parse_args(arguments)
+
+    init(args.config)
+    start_server()
+
+if __name__ == '__main__':
+    main()

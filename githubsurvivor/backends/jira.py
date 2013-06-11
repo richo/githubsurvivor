@@ -10,12 +10,13 @@ import iso8601
 from jira.client import JIRA
 from mongoengine import *
 
-from survivor.models import User, Issue
+from githubsurvivor import config
+from githubsurvivor.models import User, Issue
 
 MAX_ISSUE_RESULTS = 99999
 
 def create_user(jira_user):
-    "Creates a `survivor.models.User` from a `jira.resources.User`."
+    "Creates a `githubsurvivor.models.User` from a `jira.resources.User`."
     try:
         return User.objects.get(login=jira_user.name)
     except User.DoesNotExist:
@@ -29,7 +30,7 @@ def create_user(jira_user):
         return user.save()
 
 def create_issue(jira_issue):
-    "Creates a `survivor.models.Issue` from a `jira.resources.Issue`."
+    "Creates a `githubsurvivor.models.Issue` from a `jira.resources.Issue`."
     fields = jira_issue.fields
     state = 'closed' if fields.resolution and fields.resolution.name in ('Finished', 'Fixed') else 'open'
     parse_date = lambda d: iso8601.parse_date(d) if d else None
@@ -48,11 +49,11 @@ def create_issue(jira_issue):
 
 class Importer(object):
 
-    def __init__(self, config):
-        username = config['jira.username']
-        password = config['jira.password']
-        server = config['jira.server']
-        project = config['jira.project']
+    def __init__(self):
+        username = config.JIRA_USERNAME
+        password = config.JIRA_PASSWORD
+        server = config.JIRA_SERVER
+        project = config.JIRA_PROJECT
 
         self.jira = JIRA(basic_auth=(username, password), options={'server': server})
         self.project = project
@@ -75,5 +76,5 @@ class Importer(object):
             'project=%s and (status=OPEN or status=CLOSED)' % self.project,
             maxResults=MAX_ISSUE_RESULTS)
 
-def issue_importer(config):
-    return Importer(config)
+def issue_importer():
+    return Importer()

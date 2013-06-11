@@ -1,7 +1,7 @@
 from mongoengine import *
 from mongoengine.queryset import QuerySet
 
-from survivor import config
+from githubsurvivor import config
 
 class UserQuerySet(QuerySet):
     """
@@ -9,7 +9,7 @@ class UserQuerySet(QuerySet):
     """
     def developers(self):
         "Return all those users that should be included in the leaderboard."
-        whitelist = config['leaderboard_users']
+        whitelist = config.LEADERBOARD_USERS
         return [u for u in self.all() if not whitelist or u.login in whitelist]
 
 class User(Document):
@@ -29,5 +29,5 @@ class User(Document):
         return self.issues().filter(state='closed')
 
     def issues(self):
-        from survivor.models import Issue
+        from githubsurvivor.models import Issue
         return Issue.objects(assignee=self)

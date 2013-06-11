@@ -1,4 +1,4 @@
-/*global window, document, $, survivor */
+/*global window, document, $, githubsurvivor */
 
 (function () {
     'use strict';
@@ -46,7 +46,7 @@
             });
         });
 
-        var chart = new survivor.charts.ColumnChart($dataTable.attr('summary'));
+        var chart = new githubsurvivor.charts.ColumnChart($dataTable.attr('summary'));
         $dataTable.replaceWith(chart.element);
         chart.draw(relativeValues);
     }
@@ -66,7 +66,7 @@
             return val / max;
         });
 
-        var chart = new survivor.charts.LineChart($dataTable.attr('summary'));
+        var chart = new githubsurvivor.charts.LineChart($dataTable.attr('summary'));
         $dataTable.replaceWith(chart.element);
         chart.draw(relativeValues);
     }
