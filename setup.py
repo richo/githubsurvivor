@@ -24,7 +24,7 @@ setup(
               'githubsurvivor.tasks',
               'githubsurvivor.web'],
 
-    package_dir={'githubsurvivor': 'githubsurvivor'},
+    include_package_data=True,
 
     install_requires=['Flask==0.9',
                       'mongoengine==0.8.1',
