@@ -120,9 +120,9 @@ def unassigned():
 def start_server():
     template.register_helpers(app)
 
-    root = dirname(dirname(dirname(__file__)))
-    app.jinja_loader = FileSystemLoader(join(dirname(__file__), 'templates'))
-    app.static_folder = '%s/res/static' % root
+    here = dirname(__file__)
+    app.jinja_loader = FileSystemLoader(here, 'templates')
+    app.static_folder = join(here, 'static')
 
     app.debug = config.FLASK_DEBUG
     app.run(**config.FLASK_SETTINGS)

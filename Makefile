@@ -1,5 +1,5 @@
 LESS=res/less
-CSS=res/static/styles
+CSS=githubsurvivor/web/static/styles
 
 .PHONY: build css clean dist
 
