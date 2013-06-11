@@ -23,34 +23,34 @@ c.define('FLASK_SETTINGS',
 # GitHub options
 
 c.define('GITHUB_REPO',
-         '99designs/githubsurvivor',
+         None,
          'Specify the GitHub repo you want to report on',
          'GitHub')
 
 c.define('GITHUB_OAUTH_TOKEN',
-         'secret',
+         None,
          'OAuth token for accessing your repo. See https://help.github.com/articles/creating-an-oauth-token-for-command-line-use',
          'GitHub')
 
 # JIRA options
 
 c.define('JIRA_SERVER',
-         'https://jira.example.com',
+         None,
          'JIRA server URL',
          'JIRA')
 
 c.define('JIRA_USERNAME',
-         'username',
+         None,
          'Authorised JIRA username',
          'JIRA')
 
 c.define('JIRA_PASSWORD',
-         'password',
+         None,
          'JIRA account password',
          'JIRA')
 
 c.define('JIRA_PROJECT',
-         'PROJECT',
+         None,
          'JIRA project key',
          'JIRA')
 
