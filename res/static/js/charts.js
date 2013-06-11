@@ -1,8 +1,8 @@
 /*global $, SVG */
 
-var survivor = survivor || {};
+var githubsurvivor = githubsurvivor || {};
 
-survivor.charts = (function () {
+githubsurvivor.charts = (function () {
     'use strict';
 
     // logical chart units
