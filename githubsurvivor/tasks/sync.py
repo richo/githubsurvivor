@@ -4,9 +4,9 @@ Synchronises local database with the remote issue tracker.
 
 import argparse
 
-from survivor import init
-from survivor.backends import issue_importer
-from survivor.models import User, Issue
+from githubsurvivor import init
+from githubsurvivor.backends import issue_importer
+from githubsurvivor.models import User, Issue
 
 def sync(types, verbose=False):
 

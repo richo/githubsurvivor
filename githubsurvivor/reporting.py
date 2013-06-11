@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from dateutil import relativedelta as days
 
-from survivor import config
+from githubsurvivor import config
 
 Period = namedtuple('Period', 'start end')
 

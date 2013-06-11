@@ -10,13 +10,13 @@ import iso8601
 from jira.client import JIRA
 from mongoengine import *
 
-from survivor import config
-from survivor.models import User, Issue
+from githubsurvivor import config
+from githubsurvivor.models import User, Issue
 
 MAX_ISSUE_RESULTS = 99999
 
 def create_user(jira_user):
-    "Creates a `survivor.models.User` from a `jira.resources.User`."
+    "Creates a `githubsurvivor.models.User` from a `jira.resources.User`."
     try:
         return User.objects.get(login=jira_user.name)
     except User.DoesNotExist:
@@ -30,7 +30,7 @@ def create_user(jira_user):
         return user.save()
 
 def create_issue(jira_issue):
-    "Creates a `survivor.models.Issue` from a `jira.resources.Issue`."
+    "Creates a `githubsurvivor.models.Issue` from a `jira.resources.Issue`."
     fields = jira_issue.fields
     state = 'closed' if fields.resolution and fields.resolution.name in ('Finished', 'Fixed') else 'open'
     parse_date = lambda d: iso8601.parse_date(d) if d else None

@@ -13,8 +13,8 @@ import itertools
 from github import Github
 from mongoengine import *
 
-from survivor import config
-from survivor.models import User, Issue
+from githubsurvivor import config
+from githubsurvivor.models import User, Issue
 
 def create_user(gh_user):
     "Create a User from a `github.NamedUser`."

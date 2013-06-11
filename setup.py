@@ -18,13 +18,13 @@ setup(
     url='https://github.com/99designs/githubsurvivor',
     classifiers=['Development Status :: 4 - Beta'],
 
-    packages=['survivor',
-              'survivor.backends',
-              'survivor.models',
-              'survivor.tasks',
-              'survivor.web'],
+    packages=['githubsurvivor',
+              'githubsurvivor.backends',
+              'githubsurvivor.models',
+              'githubsurvivor.tasks',
+              'githubsurvivor.web'],
 
-    package_dir={'survivor': 'survivor'},
+    package_dir={'githubsurvivor': 'githubsurvivor'},
 
     install_requires=['Flask==0.9',
                       'mongoengine==0.8.1',
@@ -36,9 +36,9 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'githubsurvivor=survivor.web:main',
-            'githubsurvivor-sync=survivor.tasks.sync:main',
-            'githubsurvivor-generate-config=survivor.config:generate'
+            'githubsurvivor=githubsurvivor.web:main',
+            'githubsurvivor-sync=githubsurvivor.tasks.sync:main',
+            'githubsurvivor-generate-config=githubsurvivor.config:generate'
         ],
     },
 )

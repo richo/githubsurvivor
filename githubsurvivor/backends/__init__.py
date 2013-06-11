@@ -13,11 +13,11 @@ database. The importer looks like this:
             # import all issues from repo
 """
 
-from survivor import config
+from githubsurvivor import config
 
 def configured_backend():
     "Import and return the configured backend."
-    module_name = 'survivor.backends.%s' % config.BACKEND
+    module_name = 'githubsurvivor.backends.%s' % config.BACKEND
     return __import__(module_name, fromlist=module_name)
 
 def issue_importer():

@@ -2,7 +2,7 @@
 Jinja2 template helpers
 """
 
-from survivor.backends import web_theme
+from githubsurvivor.backends import web_theme
 
 def format_datetime(datetime, fmt=None):
     "Arbitrary datetime formatting."

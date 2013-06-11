@@ -7,9 +7,9 @@ from random import shuffle
 from flask import Flask, render_template, request
 from jinja2 import FileSystemLoader
 
-from survivor import init, config, reporting, timeutils
-from survivor.models import User, Issue
-from survivor.web import template
+from githubsurvivor import init, config, reporting, timeutils
+from githubsurvivor.models import User, Issue
+from githubsurvivor.web import template
 
 app = Flask(__name__, static_url_path='')
 

@@ -1,5 +1,5 @@
 import mongoengine
-from survivor.config import Config
+from githubsurvivor.config import Config
 
 def init_db(db_name):
     conn = mongoengine.connect(db_name, tz_aware=True)

@@ -1,7 +1,7 @@
 from mongoengine import *
 from mongoengine.queryset import QuerySet
 
-from survivor import config
+from githubsurvivor import config
 
 class UserQuerySet(QuerySet):
     """
@@ -29,5 +29,5 @@ class User(Document):
         return self.issues().filter(state='closed')
 
     def issues(self):
-        from survivor.models import Issue
+        from githubsurvivor.models import Issue
         return Issue.objects(assignee=self)

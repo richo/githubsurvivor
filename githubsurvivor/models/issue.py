@@ -1,7 +1,7 @@
 from mongoengine import *
 from mongoengine.queryset import QuerySet
 
-from survivor.models import User
+from githubsurvivor.models import User
 
 class IssueQuerySet(QuerySet):
     """
