@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 from datetime import datetime
 from itertools import islice
-from os.path import dirname, join
+from os.path import dirname, join, abspath
 from random import shuffle
 
 from flask import Flask, render_template, request
@@ -120,7 +120,7 @@ def unassigned():
 def start_server():
     template.register_helpers(app)
 
-    here = dirname(__file__)
+    here = abspath(dirname(__file__))
     app.jinja_loader = FileSystemLoader(join(here, 'templates'))
     app.static_folder = join(here, 'static')
 
