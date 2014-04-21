@@ -125,7 +125,13 @@ def start_server():
     app.static_folder = join(here, 'static')
 
     app.debug = config.FLASK_DEBUG
-    app.run(**config.FLASK_SETTINGS)
+
+    flask_settings = config.FLASK_SETTINGS.copy()
+    port = os.getenv('PORT')
+    if port:
+        flask_settings['port'] = int(port)
+
+    app.run(**flask_settings)
 
 def main(arguments=None):
     parser = ArgumentParser(description='Starts GitHub Survivor web application')
