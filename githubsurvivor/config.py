@@ -12,6 +12,10 @@ c.define('DB',
          'githubsurvivor',
          'Mongo database to use as local datastore')
 
+c.define('DB_HOST',
+         None,
+         'Mongo database uri, for use with eg heroku')
+
 c.define('FLASK_DEBUG',
          False,
          'Whether to display the interactive debugger on error. Don\'t enable this in publicly-accessible environments.')

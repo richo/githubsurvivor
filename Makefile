@@ -1,11 +1,12 @@
 STYLES=githubsurvivor/web/static/styles
+LESSC ?= $(shell which lessc 2> /dev/null || echo "./node_modules/less/bin/lessc")
 
 .PHONY: build css clean dist
 
 build: css
 
 $(STYLES)/%.css: $(STYLES)/%.less
-	lessc $< >$@
+	$(LESSC) $< >$@
 
 css: $(patsubst $(STYLES)/%.less,$(STYLES)/%.css,$(wildcard $(STYLES)/*.less))
 

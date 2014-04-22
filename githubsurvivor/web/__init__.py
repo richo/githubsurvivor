@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 from datetime import datetime
 from itertools import islice
-from os.path import dirname, join
+from os.path import dirname, join, abspath
 from random import shuffle
 
 from flask import Flask, render_template, request
@@ -120,12 +120,18 @@ def unassigned():
 def start_server():
     template.register_helpers(app)
 
-    here = dirname(__file__)
+    here = abspath(dirname(__file__))
     app.jinja_loader = FileSystemLoader(join(here, 'templates'))
     app.static_folder = join(here, 'static')
 
     app.debug = config.FLASK_DEBUG
-    app.run(**config.FLASK_SETTINGS)
+
+    flask_settings = config.FLASK_SETTINGS.copy()
+    port = os.getenv('PORT')
+    if port:
+        flask_settings['port'] = int(port)
+
+    app.run(**flask_settings)
 
 def main(arguments=None):
     parser = ArgumentParser(description='Starts GitHub Survivor web application')
