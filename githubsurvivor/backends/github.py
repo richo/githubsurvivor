@@ -44,7 +44,7 @@ class Importer(object):
 
     def __init__(self):
         auth_token = config.GITHUB_OAUTH_TOKEN
-        account_name, repo_name = config.GITHUB_REPO.split('/')
+        account_name, repo_name = config.GITHUB_REPO.split('/', 1)
         account = Github(auth_token).get_user(account_name)
         self.repo = account.get_repo(repo_name)
 
